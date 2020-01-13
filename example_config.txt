@@ -1,0 +1,12 @@
+# This theme inserts these Open Graph protocol values into <meta> tags on
+# all pages. You should set the values as appropriate for your site.
+# More info:
+#  - https://ogp.me/
+#  - https://css-tricks.com/essential-meta-tags-social-media/
+og:url = https://example.com
+og:image = https://example.com/img/example_logo_white_on_blue-1200x630.png
+og:description = Company providing technology-related consulting services.
+
+# If you want a LinkedIn logo/link in your footer, just
+# set and uncomment the LinkedInURL line.
+LinkedInURL = http://www.linkedin.com/company/example

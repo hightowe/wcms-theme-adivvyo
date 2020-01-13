@@ -1,0 +1,204 @@
+html {
+	min-height: 100%;
+	position: relative;
+}
+
+body {
+	background: url(../noise.png)  repeat top left;
+	font-family: "Lucida Sans Unicode", Verdana;
+	color:#555;
+	text-align:center;
+	margin-bottom: 40px;
+}
+
+a {
+	color: #559;
+}
+a:hover {
+	cursor: pointer;
+	color: #11c;
+}
+
+.whiteFont {color: #fff;}
+.padding20 {padding: 20px;}
+.padding40 {padding: 40px;}
+.colorBackground {
+	background-color: #2d356d !important;
+}
+
+.lightFont {
+	color:#aaa; 
+	font-size:18px;
+}
+
+.btn-info {
+		border-color: #2d356d;
+		background-color: #2bc;
+}
+
+.navbar-default .navbar-toggle {
+	border-color: #888;
+}
+
+.navbar .container {
+	width: 99%;
+	margin-top: 4px;
+	margin-bottom: 0px;
+	//padding: 0.6px 20px 0.6px 20px;
+	padding-left: 35px;
+	padding-right: 20px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	-moz-border-radius: 8px;
+		border-radius: 8px;
+}
+.navbar .container .navbar-brand {
+	color: #fff;
+	padding: 0px 0px 0px 9px; /* If using a title_logo.png */
+	/* padding: 9px 0px 0px 5px; /* If not using a title_logo.png */
+	font-size: 50px;
+}
+.navbar-brand.title-logo {
+  border:0px;
+  height:50px;
+}
+
+.navbar li {
+	font-size: 20px;
+	font-family: 'Baumans', Arial, sans-serif;;
+}
+.navbar, .navbar-collapse {
+	border: 0;
+	background: none;
+}
+/* The style of the menu item for the current (active) page */
+.navbar-nav .nav-item.active a {
+	color: #fff !important;
+	background: none !important;
+	border-bottom: 1px solid #ccc;
+	font-size: 101%;
+	// text-decoration: none;
+}
+/* The style of menu items as the mouse hovers over them */
+/* .navbar li a:hover { */
+.navbar-nav .nav-item:not(.active) a:hover {
+	color: #fff !important;
+	background: none !important;
+	border-bottom: 1px solid #fff;
+	// text-decoration: underline;
+}
+/* The style of menu items when the mouse is not hovered over them */
+/* .navbar li a:not(:hover) { */
+.navbar-nav .nav-item:not(.active) a:not(:hover) {
+	color: #ddd !important;
+}
+/* This chunk of CSS is intended to size and position nav-bar */
+/* icons that you may put into place */
+.nav-icon img {
+  border:0px;
+  height:15px;
+  position:relative;
+  top:-2px;
+}
+/*
+ * If you don't like having a menu option shown for the
+ * detault page (since clicking the Title takes you there),
+ * then uncomment this CSS with "display: none"
+*/
+/*
+.nav-item.nav-default-page {
+  display: none;
+}
+*/
+
+.color-selector {
+	padding: 0px 12px;
+	list-style-type: none;
+}
+.color-selector li {
+	float: left;
+}
+.color-selector li a {
+    display: block;
+    text-align: center;
+    padding: 17px 4px 16px;
+    text-decoration: none;
+}
+.color-selector li a:hover, .active a {
+	border-bottom: 0px;
+}
+
+.form-control:focus {
+  border-color: #3bf;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 4px rgba(20, 60, 255, 0.6);
+}
+
+.footer {
+	bottom: 0;
+	width: 100%;
+	font-size: 13px;
+	position: absolute;
+	padding: 2px;
+}
+footer a {
+	color: #ddd !important;
+}
+footer a:hover {
+	color: #fff !important;
+}
+
+/* Drop shadow without images
+ * http://www.prowebdesign.ro/round-brush-like-responsive-drop-shadows-with-css3-and-no-images/ */
+
+.css3-shadow {
+	position: relative;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 80, 0.3);
+			box-shadow: 0 1px 4px rgba(0, 0, 80, 0.3);
+}
+/*
+ * Drop shadow effect with box-shadow
+ */
+.css3-shadow:after {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	-webkit-box-shadow: 0 0 40px rgba(0,0,0,80.8);
+			box-shadow: 0 0 40px rgba(0,0,0,80.8);
+	bottom: 0px;
+	width: 80%;
+	height: 50%;
+	-moz-border-radius: 100%;
+		border-radius: 100%;
+	left: 10%;
+	right: 10%;
+}
+
+.box {
+	background: #fff;
+	//margin: 10px auto 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 10px;
+        margin-right: 10px;
+	padding: 20px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+/* / Drop shadow without images */
+
+span.editable, .note-editor {
+	border-radius: 3px !important;
+	border: 1px dotted #c7c1ed !important;
+}
+
+
+/*
+ * NOTE: if you want to change the width at which Bootstrap 3.3.x
+ * collapses the menu, examples of how to do so are here:
+ *
+ * https://stackoverflow.com/questions/42724884/bootstrap-navbar-collapse-point-768px/42725215#42725215
+ *
+ * https://stackoverflow.com/questions/19827605/change-bootstrap-navbar-collapse-breakpoint-without-using-less
+ *
+*/
+ 
