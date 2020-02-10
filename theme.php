@@ -84,7 +84,7 @@ $Wcms->addListener('settings', 'alterAdmin'); // in functions.php
 		</div>
 	</div>
 
-	<div class="container footer colorBackground">
+	<div class="container-fluid footer colorBackground">
 		<div class="whiteFont col-lg-12 text-center">
 			<!-- ?=wCMS::block('subside')? -->
 			<?=wCMS::footer()?>
