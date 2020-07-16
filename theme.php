@@ -77,7 +77,7 @@ $Wcms->addListener('settings', 'alterAdmin'); // in functions.php
 
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="box css3-shadow whiteBackground col-lg-12 text-left padding40 d-flex" style="min-height:85vh">
+			<div class="box css3-shadow whiteBackground col text-left padding40 d-flex" style="min-height:85vh">
 				<?=wCMS::page('content')?>
 
 			</div>
