@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "themes": {
+        "wcms-theme-adivvyo": {
+            "name": "Wcms Theme Adivvyo",
+            "repo": "https://github.com/robiso/wcms-theme-adivvyo/tree/master",
+            "zip": "https://github.com/robiso/wcms-theme-adivvyo/archive/master.zip",
+            "summary": "Adivvyo theme for WonderCMS.",
+            "version": "20205240",
+            "image": "https://raw.githubusercontent.com/robiso/wcms-theme-adivvyo/master/preview.jpg"
+        }
+    }
+}
