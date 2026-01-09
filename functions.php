@@ -18,7 +18,7 @@ function getAdivvyoOpts() {
 # how to do this.
 function alterAdmin($args) {
   global $Wcms;
-  if(!$Wcms->get('config', 'loggedIn')) return $args;
+  if (!$Wcms->get('config', 'loggedIn')) return $args;
   $doc = new DOMDocument();
   # Note that mb_convert_encoding() is used here because without it we
   # suffer the problem described by "hanhvansu at yahoo dot com", here:
@@ -26,12 +26,18 @@ function alterAdmin($args) {
   # I suspect that theme-parallax suffers this problem, as well.
   @$doc->loadHTML(mb_convert_encoding($args[0], 'HTML-ENTITIES', "UTF-8"));
 
+  # Adapted on 01/09/2026 to support old (3.0.4) and new (3.6.0)
+  $append_to = $doc->getElementById("general"); # Older versions of WonderCMS
+  if (is_null($append_to)) {
+    $append_to = $doc->getElementById("menu"); # Newer versions of WonderCMS
+  }
+
   # Place a label identifying these are Adivvyo theme options
   $themeLabel = $doc->createElement("p");
   $themeLabel->setAttribute("class", "subTitle");
   $themeLabel->setAttribute("style", "font-weight:bold; font-variant: normal;");
   $themeLabel->nodeValue = "Adivvyo Theme Options";
-  $doc->getElementById("general")->appendChild($themeLabel);
+  $append_to->appendChild($themeLabel);
 
   # Setup style for id=themeInfoDiv
   $infoDivStyle = $doc->createElement("style");
@@ -40,15 +46,15 @@ function alterAdmin($args) {
 	"#themeInfoDiv a { color: #5bc0de; }\n" .
 	"#themeInfoDiv p, ul, li { font-variant: normal; }\n" .
 	"";
-  $doc->getElementById("general")->appendChild($infoDivStyle);
+  $append_to->appendChild($infoDivStyle);
   # Create a div to provide some information to the user in.
   $infoDiv = $doc->createElement("div");
   $infoDiv->setAttribute("id", "themeInfoDiv");
-  $doc->getElementById("general")->appendChild($infoDiv);
+  $append_to->appendChild($infoDiv);
 
   # If config.txt is in place, just tell the user and bail.
   if (acGet('source') === 'config.txt') {
-    appendHTML($infoDiv, 
+    appendHTML($infoDiv,
 	"<p>There is a config.txt file in place and so it " .
 	"is preferentally used versus this settings panel. " .
 	"Values set by it are shown below. Please make " .
@@ -59,14 +65,14 @@ function alterAdmin($args) {
       $real_id = preg_replace('/^theme:/', '', $id);
       $vals_html .= "<li><b>$real_id</b> = " . acGet($real_id) . "\n";
     }
-    $vals_html .= "</ul></p>\n";
+    $vals_html .= "</ul>\n";
     appendHTML($infoDiv, $vals_html);
     $args[0] = preg_replace('~<(?:!DOCTYPE|/?(?:html|body))[^>]*>\s*~i', '', $doc->saveHTML());
     return $args;
   }
 
   # Let the user know that they can use a config.txt file instead.
-  appendHTML($infoDiv, 
+  appendHTML($infoDiv,
 	"<p>If you would prefer, these values can instead be " .
 	"set in a config.txt file placed in this theme's top folder, " .
 	"and those values would be used instead of these." .
@@ -74,7 +80,7 @@ function alterAdmin($args) {
 	'The format is simple "key = value" style, one per line, ' .
 	'and lines can be commented with a leading pound/hash (#).</p>');
   # Give the user some info about the Open Graph protocol.
-  appendHTML($infoDiv, 
+  appendHTML($infoDiv,
 	"<p>For Open Graph protocol info (og::xxx values), see: " .
 	'<a href="https://ogp.me">https://ogp.me</a> and ' .
 	'<a href="https://css-tricks.com/essential-meta-tags-social-media">' .
@@ -89,9 +95,9 @@ function alterAdmin($args) {
 	'<p class="subTitle" style="font-size:1.3em; font-variant:normal;">' .
 	$label .
 	'<span style="font-size:0.8em; font-family: monospace;"> - <b>' .
-						$real_id. '</b></span>' .
+						$real_id . '</b></span>' .
 	'</p>';
-    appendHTML($doc->getElementById("general"), $label_html);
+    appendHTML($append_to, $label_html);
     # Field input-box
     $wrapper = $doc->createElement("div");
     $wrapper->setAttribute("class", "change");
@@ -108,8 +114,8 @@ function alterAdmin($args) {
     }
     $input->nodeValue = $value;
     $wrapper->appendChild($input);
-    $doc->getElementById("general")->appendChild($wrapper);
-    #$doc->getElementById("general")->insertBefore($wrapper, $doc->getElementById("general")->lastChild->nextSibling);
+    $append_to->appendChild($wrapper);
+    #$append_to->insertBefore($wrapper, $append_to->lastChild->nextSibling);
   }
 
   $args[0] = preg_replace('~<(?:!DOCTYPE|/?(?:html|body))[^>]*>\s*~i', '', $doc->saveHTML());
@@ -127,7 +133,8 @@ function loadAdivvyoConf() {
   global $Wcms;
   $conf = array( 'loaded' => true );
   $conf_file = $Wcms->rootDir .
-      '/themes/' . $Wcms->get('config', 'theme') . '/config.txt';
+    '/themes/' . $Wcms->get('config', 'theme') . '/config.txt';
+  #error_log("LHHD: *conf_file* = *$conf_file*");
 
   # If config.txt does not exist, load from wCMS settings
   if (! file_exists($conf_file)) {
@@ -176,10 +183,10 @@ function getSiteLinkedInLink() {
   $path = 'img/';
   $icon_url = $Wcms->asset($path . $icon);
   $icon_on_disk = $Wcms->rootDir .
-      '/themes/' . $Wcms->get('config', 'theme') . '/' . $path . $icon;
+	'/themes/' . $Wcms->get('config', 'theme') . '/' . $path . $icon;
   if (strlen($LI_URL) and file_exists($icon_on_disk)) {
     return '&bull;&nbsp;' .
-	'<a href="'.$LI_URL.'"><img src="'.$icon_url.'" height="20px"></a>';
+	'<a href="' . $LI_URL . '"><img src="' . $icon_url . '" height="20px"></a>';
   }
   return '';
 }
@@ -188,17 +195,43 @@ function getSiteLinkedInLink() {
 # $Wcms->addListener('menu', 'getMenuAdivvyo');
 function getMenuAdivvyo($args) {
   global $Wcms;
+  $args[0] = renderMenuAdivvyoRecursive($Wcms->get('config', 'menuItems'));
+  return $args;
+}
+
+# Recursive helper for the Adivvyo theme menu.
+function renderMenuAdivvyoRecursive($items, $parentSlug = '') {
+  global $Wcms;
   $output = '';
-  foreach ($Wcms->get('config', 'menuItems') as $item) {
-    if ($item->visibility === 'hide') {
+  foreach ($items as $item) {
+    $subpages = false;
+    $visibleSubpage = false;
+    if (property_exists($item, 'subpages') && !empty((array) $item->subpages)) {
+      $subpages = $item->subpages;
+      $visibleSubpage = in_array('show', array_column((array) $subpages, 'visibility'));
+    }
+
+    # Hide if item is set to hide and has no visible subpages
+    if ($item->visibility === 'hide' && !$visibleSubpage) {
       continue;
     }
+
+    $currentSlug = $parentSlug . ($parentSlug ? '/' : '') . $item->slug;
+    $isPlaceholder = ($item->visibility === 'hide' && $visibleSubpage);
+
     # Adds class "nav-default-page" which can be used in the CSS
     # to hide the "homepage" menu option.
     $extra_class = '';
-    if ($Wcms->get('config','defaultPage') === $item->slug) {
+    if ($Wcms->get('config', 'defaultPage') === $currentSlug) {
       $extra_class .= 'nav-default-page ';
     }
+    if ($visibleSubpage) {
+      $extra_class .= 'subpage-nav ';
+    }
+    if ($isPlaceholder) {
+      $extra_class .= 'nav-placeholder ';
+    }
+
     # To support .../theme/img/menu/<pagename>.png icons for menu items
     $icon = $item->slug . ".png";
     $icon_url = $Wcms->asset("img/menu/" . $icon);
@@ -207,18 +240,34 @@ function getMenuAdivvyo($args) {
     $menu_content = $item->name;
     if (file_exists($icon_on_disk)) {
       $extra_class .= 'nav-icon ';
-      $menu_content = '<img class="' .$extra_class. '" src="' .$icon_url. '">';
+      $menu_content = '<img class="' . $extra_class . '" src="' . $icon_url . '">';
     }
+
+    # Determine if this menu item is active (exact match or part of the tree)
+    $fullCurrentPath = implode('/', $Wcms->currentPageTree);
+    $isActive = ($fullCurrentPath === $currentSlug || strpos($fullCurrentPath, $currentSlug . '/') === 0);
+
+    # For placeholders, if not logged in, use # link
+    $href = wCMS::url($currentSlug);
+    if ($isPlaceholder && !$Wcms->loggedIn) {
+      $href = '#';
+    }
+
     $output .= '<li class="' .
-			$extra_class .
-			($Wcms->currentPage === $item->slug ? 'active ' : '') .
-			 'nav-item">' .
-		'<a class="nav-link" href="' .
-			wCMS::url($item->slug) . '">' . $menu_content . '</a>' .
-		'</li>';
+      $extra_class .
+      ($isActive ? 'active ' : '') .
+      'nav-item">' .
+      '<a class="nav-link" href="' . $href . '">' . $menu_content . '</a>';
+
+    if ($visibleSubpage) {
+      $output .= '<ul class="subPageDropdown">';
+      $output .= renderMenuAdivvyoRecursive($subpages, $currentSlug);
+      $output .= '</ul>';
+    }
+
+    $output .= '</li>';
   }
-  $args[0] = $output;
-  return $args;
+  return $output;
 }
 
 # Convenience and code-reduction function.
@@ -232,4 +281,3 @@ function appendHTML(DOMNode $parent, $source) {
 }
 
 ?>
-

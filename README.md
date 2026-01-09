@@ -35,6 +35,10 @@ https://adivvyo.com
 6. Optional LinkedIn link/logo placed in footer.
 
 # Update
+* 20260109A - 2026-01-09
+ - Added support for subpages / submenus
+ - If root-level pages are hidden but they have visible subpages, then
+   that is just a "top-level menu placeholder" and not a navigable page.
 * 20200113A - 2020-01-13
  - Added wCMS Settings options for the theme.
 * 20200111A - 2020-01-11
