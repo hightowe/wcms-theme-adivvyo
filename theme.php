@@ -84,13 +84,20 @@ $Wcms->addListener('settings', 'alterAdmin'); // in functions.php
 		</div>
 	</div>
 
+        <?php
+	// This loggedIn check was added after I upgraded to 3.6.0 and discovered the
+        // bug reported here: https://github.com/hightowe/wcms-theme-adivvyo/issues/2
+        ?>
+	<?php if (!$Wcms->loggedIn): ?>
 	<div class="container-fluid footer colorBackground">
 		<div class="whiteFont col-lg-12 text-center">
 			<!-- ?=wCMS::block('subside')? -->
 			<?=wCMS::footer()?>
 			<?=getSiteLinkedInLink()?>
-			</div>
+		</div>
 	</div>
+	<?php endif ?>
+
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.autosize/3.0.17/autosize.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
