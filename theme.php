@@ -9,27 +9,29 @@ if(version<'2.0.0')
 $theme_css = 'css/style-adivvyo.css';
 $Wcms->addListener('menu', 'getMenuAdivvyo'); // in functions.php
 $Wcms->addListener('settings', 'alterAdmin'); // in functions.php
+$currentSlug = implode('/', $Wcms->currentPageTree); // used in meta tags
 ?>
 <html lang="en">
 <head>
+	<title><?=wCMS::get('config','siteTitle')?> - <?=wCMS::page('title')?></title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="<?=wCMS::page('description')?>">
 	<meta name="keywords" content="<?=wCMS::page('keywords')?>">
-	<meta property="og:type" content="website">
-	<meta property="og:image" content="<?=acGet('og:image')?>">
-	<meta property="og:url" content="<?=acGet('og:url')?>">
-	<meta property="og:description" content="<?=acGet('og:description')?>">
-	<meta property="og:title" content="<?=wCMS::get('config','siteTitle')?>">
-	<meta property="og:site_name" content="<?=wCMS::get('config','siteTitle')?>">
+	<meta property="og:type" content="<?=acGet($currentSlug .'|og:type') ?: 'website' ?>">
+	<meta property="og:image" content="<?=acGet($currentSlug . '|og:image')?>">
+	<meta property="og:url" content="<?=acGet($currentSlug . '|og:url')?>">
+	<meta property="og:description" content="<?=acGet($currentSlug . '|og:description')?>">
+	<meta property="og:title" content="<?=acGet($currentSlug .'|og:title') ?: wCMS::get('config','siteTitle')?>">
+	<meta property="og:site_name" content="<?=acGet($currentSlug .'|og:site_name') ?: wCMS::get('config','siteTitle')?>">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link id="stylesheet" rel="stylesheet" href="<?=wCMS::asset($theme_css)?>">
 	<link href='https://fonts.googleapis.com/css?family=Baumans' rel='stylesheet'>
 	<?=wCMS::css()?>
 	<?php
 	# If /favicon.xxx exists, insert a <link> for it
-        foreach (array('png','jpg','gif','ico') as $ext) {
+    foreach (array('png','jpg','gif','ico') as $ext) {
 	  $ico_file = '/favicon.' . $ext;
 	  $ico_path = $Wcms->rootDir . $ico_file;
 	  if (file_exists($ico_path)) {
@@ -38,9 +40,9 @@ $Wcms->addListener('settings', 'alterAdmin'); // in functions.php
 	    echo "\n";
 	    break; # Break out of the foreach loop
 	  }
-        }
+    }
 	?>
-	<title><?=wCMS::get('config','siteTitle')?> - <?=wCMS::page('title')?></title>
+
 </head>
 <body>
 	<?=wCMS::alerts()?>

@@ -4,9 +4,19 @@
 #  - https://ogp.me/
 #  - https://css-tricks.com/essential-meta-tags-social-media/
 og:url = https://example.com
+og:type = website
 og:image = https://example.com/img/example_logo_white_on_blue-1200x630.png
-og:description = Company providing technology-related consulting services.
+og:description = Company providing technology-related products and services
 
 # If you want a LinkedIn logo/link in your footer, just
 # set and uncomment the LinkedInURL line.
 LinkedInURL = http://www.linkedin.com/company/example
+
+# Override meta tags for specific pages, by slug
+products/product1|og:title = Product #1 - a brief product description
+products/product1|og:description = Product #1 - a more comprehensive product description
+products/product1|og:site_name = Product #1
+products/product1|og:type = product
+products/product1|og:url = https://example.com/product1/
+products/product1|og:image = https://example.com/product1/feature_image.png
+

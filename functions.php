@@ -168,8 +168,16 @@ function acGet($key) {
   if (! (array_key_exists('loaded', $AdivvyoConf) and $AdivvyoConf['loaded'])) {
     $AdivvyoConf = loadAdivvyoConf();
   }
+  # If exact key exists, return it.
   if (array_key_exists($key, $AdivvyoConf)) {
     return $AdivvyoConf[$key];
+  }
+  # Fallback logic: if key is "slug|key", try to return "key".
+  if (strpos($key, '|') !== false) {
+    list($slug, $real_key) = explode('|', $key, 2);
+    if (array_key_exists($real_key, $AdivvyoConf)) {
+      return $AdivvyoConf[$real_key];
+    }
   }
   return '';
 }
