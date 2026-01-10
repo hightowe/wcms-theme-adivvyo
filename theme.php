@@ -101,6 +101,37 @@ $Wcms->addListener('settings', 'alterAdmin'); // in functions.php
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.autosize/3.0.17/autosize.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('.submenu-toggle, .nav-placeholder > .nav-link').on('click', function(e) {
+				var $parent = $(this).closest('li');
+				var $submenu = $parent.find('> .subPageDropdown');
+				var $toggle = $parent.find('> .submenu-toggle');
+
+				if ($(window).width() < 768) {
+					// Mobile accordion behavior
+					e.preventDefault();
+					$submenu.slideToggle();
+					$toggle.toggleClass('open');
+				} else {
+					// Desktop/Tablet click-to-open behavior
+					e.preventDefault();
+					
+					// Close other open submenus if they aren't parents of this one
+					$('.nav-item.clicked-open').not($parent.parents()).not($parent).removeClass('clicked-open');
+					
+					$parent.toggleClass('clicked-open');
+				}
+			});
+
+			// Close submenus when clicking outside
+			$(document).on('click', function(e) {
+				if (!$(e.target).closest('.nav-item').length) {
+					$('.nav-item.clicked-open').removeClass('clicked-open');
+				}
+			});
+		});
+	</script>
 	<?=wCMS::js()?>
 </body>
 </html>

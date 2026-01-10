@@ -260,6 +260,7 @@ function renderMenuAdivvyoRecursive($items, $parentSlug = '') {
       '<a class="nav-link" href="' . $href . '">' . $menu_content . '</a>';
 
     if ($visibleSubpage) {
+      $output .= '<span class="submenu-toggle"></span>';
       $output .= '<ul class="subPageDropdown">';
       $output .= renderMenuAdivvyoRecursive($subpages, $currentSlug);
       $output .= '</ul>';

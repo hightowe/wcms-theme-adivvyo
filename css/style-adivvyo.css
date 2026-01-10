@@ -54,7 +54,7 @@ a:hover {
 	width: 99%;
 	margin-top: 4px;
 	margin-bottom: 0px;
-	//padding: 0.6px 20px 0.6px 20px;
+	/* padding: 0.6px 20px 0.6px 20px; */
 	padding-left: 35px;
 	padding-right: 20px;
 	padding-top: 2px;
@@ -94,16 +94,15 @@ a:hover {
 	background: none !important;
 	border-bottom: 1px solid #ccc;
 	font-size: 101%;
-	// text-decoration: none;
+	/* text-decoration: none; */
 }
 
 /* The style of menu items as the mouse hovers over them */
-/* .navbar li a:hover { */
-.navbar-nav .nav-item:not(.active) a:hover {
+.navbar-nav .nav-item:not(.active):hover a {
 	color: #fff !important;
 	background: none !important;
 	border-bottom: 1px solid #fff;
-	// text-decoration: underline;
+	/* text-decoration: underline; */
 }
 
 /* The style of menu items when the mouse is not hovered over them */
@@ -203,7 +202,7 @@ footer a:hover {
 
 .box {
 	background: #fff;
-	//margin: 10px auto 0px;
+	/* margin: 10px auto 0px; */
 	margin-top: 0px;
 	margin-bottom: 0px;
 	margin-left: 10px;
@@ -230,6 +229,7 @@ span.editable,
  *
  * https://stackoverflow.com/questions/19827605/change-bootstrap-navbar-collapse-breakpoint-without-using-less
  *
+ 
 
 */
 
@@ -256,8 +256,7 @@ ul.subPageDropdown {
 	text-align: left;
 }
 
-.navbar-nav li:hover>ul.subPageDropdown,
-.navbar-nav li:focus-within>ul.subPageDropdown {
+.navbar-nav li.clicked-open>ul.subPageDropdown {
 	visibility: visible;
 	opacity: 1;
 }
@@ -284,13 +283,109 @@ ul.subPageDropdown li a:hover {
 	background: rgba(255, 255, 255, 0.1);
 }
 
-/* Submenu dropdown indicator */
-.navbar-nav li.subpage-nav>a:after {
-	content: ' \25BE';
-	font-size: 0.8em;
-	vertical-align: middle;
+/* Submenu dropdown indicator (Hidden in favor of click-toggle) */
+@media (min-width: 768px) {
+	.navbar-nav li.subpage-nav>a:after {
+		display: none;
+	}
 }
 
 .nav-placeholder>a {
 	cursor: default;
+}
+
+/* Toggle Button - Universal */
+.submenu-toggle {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 30px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	cursor: pointer;
+	color: #ddd;
+	z-index: 10;
+}
+
+.submenu-toggle:after {
+	content: '\25BE';
+	/* Down arrow */
+	font-size: 1.2em;
+	transition: transform 0.3s ease;
+	display: inline-block;
+}
+
+.submenu-toggle.open:after,
+.clicked-open>.submenu-toggle:after {
+	transform: rotate(180deg);
+}
+
+/* Mobile Menu Improvements */
+@media (max-width: 767px) {
+	ul.subPageDropdown {
+		visibility: visible;
+		opacity: 1;
+		position: static;
+		display: none;
+		/* Controlled by jQuery slideToggle */
+		box-shadow: none;
+		padding-left: 0;
+		text-align: center;
+		background: rgba(0, 0, 0, 0.1);
+		width: 100%;
+		border-radius: 0;
+	}
+
+	.navbar-nav li:hover>ul.subPageDropdown,
+	.navbar-nav li:focus-within>ul.subPageDropdown {
+		/* Disable hover on mobile */
+		display: none;
+	}
+
+	.submenu-toggle {
+		width: 50px;
+		/* Larger tap target on mobile */
+	}
+
+	.navbar-nav .nav-item {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.navbar-nav .nav-item.active a {
+		border-bottom: none;
+	}
+}
+
+@media (min-width: 768px) {
+	.navbar-nav>li {
+		white-space: nowrap;
+	}
+
+	.navbar-nav>li>a {
+		display: inline-block !important;
+		vertical-align: middle;
+	}
+
+	.navbar-nav>li>.submenu-toggle {
+		position: static;
+		display: inline-block;
+		vertical-align: middle;
+		width: auto;
+		padding: 0 8px;
+		margin-left: -5px;
+		/* Adjust spacing beside the link */
+		font-size: 1.4em;
+		/* Larger arrow for desktop */
+	}
+
+	/* Underline synchronization for desktop */
+	.navbar-nav .nav-item.active .submenu-toggle {
+		border-bottom: 1px solid #ccc;
+	}
+
+	.navbar-nav .nav-item:not(.active):hover .submenu-toggle {
+		border-bottom: 1px solid #fff;
+	}
 }
