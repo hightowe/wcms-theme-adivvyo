@@ -33,8 +33,11 @@ https://adivvyo.com
    existence of a config.txt will trump any values stored in Settings.
 5. Supports meta properties for og:xxx.
 6. Optional LinkedIn link/logo placed in footer.
+7. Full sub-page and sub-menu support as of 01/10/2026.
 
 # Updates
+* 20260109C - 2026-01-10
+    - Fixed submenus on mobile and replaced hover to open with click to open
 * 20260109B - 2026-01-09
     - Fixed issue #2
 * 20260109A - 2026-01-09
