@@ -252,7 +252,7 @@ function renderMenuAdivvyoRecursive($items, $parentSlug = '') {
     }
 
     # Determine if this menu item is active (exact match or part of the tree)
-    $fullCurrentPath = implode('/', $Wcms->currentPageTree);
+    $fullCurrentPath = implode('/', $Wcms->currentPageTree ?? [$Wcms->currentPage]);
     $isActive = ($fullCurrentPath === $currentSlug || strpos($fullCurrentPath, $currentSlug . '/') === 0);
 
     # For placeholders, if not logged in, use # link

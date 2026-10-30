@@ -9,7 +9,7 @@ if(version<'2.0.0')
 $theme_css = 'css/style-adivvyo.css';
 $Wcms->addListener('menu', 'getMenuAdivvyo'); // in functions.php
 $Wcms->addListener('settings', 'alterAdmin'); // in functions.php
-$currentSlug = implode('/', $Wcms->currentPageTree); // used in meta tags
+$currentSlug = implode('/', $Wcms->currentPageTree ?? [$Wcms->currentPage]); // used in meta tags
 ?>
 <html lang="en">
 <head>
